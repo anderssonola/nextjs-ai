@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarLayout, SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,21 +20,30 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { cookies } = await import("next/headers");
+  const isDev = process.env.NODE_ENV === "development";
 
   return (
-    <html lang="en">
-      <body className={`${inter.className} dark`}>
-        <SidebarLayout
-          defaultOpen={cookies().get("sidebar:state")?.value === "true"}
+    <html lang="en" suppressHydrationWarning={isDev}>
+      <body className={`${inter.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-          <AppSidebar />
-          <main className="flex flex-1 flex-col p-2 transition-all duration-300 ease-in-out">
-            <div className="h-full rounded-md border-2 border-dashed p-2">
-              <SidebarTrigger />
-              {children}
-            </div>
-          </main>
-        </SidebarLayout>
+          <SidebarLayout
+            defaultOpen={cookies().get("sidebar:state")?.value === "true"}
+          >
+            <AppSidebar />
+            <main className="flex flex-1 flex-col p-2 transition-all duration-300 ease-in-out">
+              <div className="h-full rounded-md border-2 border-dashed p-2">
+                <SidebarTrigger />
+                <ThemeToggle />
+                {children}
+              </div>
+            </main>
+          </SidebarLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

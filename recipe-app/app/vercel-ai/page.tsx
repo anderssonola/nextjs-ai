@@ -1,16 +1,23 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { RecipeSchema } from "@/src/recipeSchema";
-import { experimental_useObject as useObject } from "ai/react";
+
 import { useState } from "react";
-import { set } from "zod";
+import { experimental_useObject as useObject } from "ai/react";
+import { Input } from "@/components/ui/input";
+import { RecipeCard } from "@/components/recipe-card";
+
+import { RecipeSchema } from "@/src/recipeSchema";
+import Loader from "@/components/loader";
 
 export default function VercelAiPage() {
-  const [prompt, setPrompt] = useState("Spagetti Carbonara");
+  const [prompt, setPrompt] = useState("");
   const { object, submit, isLoading } = useObject({
     schema: RecipeSchema,
     api: "/vercel-ai/api",
-    initialValue: { name: "", ingredients: [], steps: [] },
+    initialValue: {
+      name: "",
+      ingredients: [],
+      steps: [],
+    },
   });
 
   return (
@@ -25,10 +32,10 @@ export default function VercelAiPage() {
             setPrompt("");
           }
         }}
-        placeholder="What recipe do you want"
+        placeholder="What recipe do you want?"
       />
-      {/* {isLoading && <Loading/>} */}
-      <div>{JSON.stringify(object)}</div>
+      {isLoading && <Loader />}
+      <RecipeCard recipe={object as any} />
     </div>
   );
 }

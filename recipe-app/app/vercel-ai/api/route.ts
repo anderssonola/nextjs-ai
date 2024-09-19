@@ -5,7 +5,7 @@ import { google } from "@ai-sdk/google";
 
 import { RecipeSchema } from "@/src/recipeSchema";
 
-const googleModelName = "gemini-1.5-pro-latest";
+const googleModelName = "gemini-1.5-flash";
 
 export async function POST(req: Request) {
   const { prompt } = await req.json();
@@ -13,8 +13,8 @@ export async function POST(req: Request) {
   const { object } = await generateObject({
     model: google(googleModelName),
     schema: RecipeSchema,
-    prompt: `Recipe for ${prompt} || Choclate brownies`,
+    prompt: `Recipe for ${prompt}`,
   });
 
-  return NextResponse.json({ object });
+  return NextResponse.json(object);
 }

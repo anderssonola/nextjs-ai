@@ -6,7 +6,7 @@ export const RecipeSchema = z.object({
     .array(
       z.object({
         quantity: z.string().describe("quantity of the ingredient"),
-        ingredient: z.string().describe("ingredient name"),
+        ingredient: z.string().describe("name of the ingredient, exclude the quantity"),
       })
     )
     .describe("List of ingredients"),
