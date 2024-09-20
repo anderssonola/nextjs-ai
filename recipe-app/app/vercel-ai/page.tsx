@@ -5,13 +5,13 @@ import { experimental_useObject as useObject } from "ai/react";
 import { Input } from "@/components/ui/input";
 import { RecipeCard } from "@/components/recipe-card";
 
-import { RecipeSchema } from "@/src/recipeSchema";
+import { ZodRecipeSchema } from "@/src/recipeSchema";
 import Loader from "@/components/loader";
 
 export default function VercelAiPage() {
   const [prompt, setPrompt] = useState("");
   const { object, submit, isLoading } = useObject({
-    schema: RecipeSchema,
+    schema: ZodRecipeSchema,
     api: "/vercel-ai/api",
     initialValue: {
       name: "",

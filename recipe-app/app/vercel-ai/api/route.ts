@@ -3,7 +3,7 @@ import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
 
-import { RecipeSchema } from "@/src/recipeSchema";
+import { ZodRecipeSchema } from "@/src/recipeSchema";
 
 const googleModelName = "gemini-1.5-flash";
 
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   const { object } = await generateObject({
     model: google(googleModelName),
-    schema: RecipeSchema,
+    schema: ZodRecipeSchema,
     prompt: `Recipe for ${prompt}`,
   });
 

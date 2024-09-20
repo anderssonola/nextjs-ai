@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RecipeSchema } from "@/src/recipeSchema";
+import { ZodRecipeSchema } from "@/src/recipeSchema";
 import Markdown from "react-markdown";
 import { z } from "zod";
 
-type RecipeCardProps = { recipe?: z.infer<typeof RecipeSchema> };
+type RecipeCardProps = { recipe?: z.infer<typeof ZodRecipeSchema> };
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   if (!recipe || !recipe.name) {
@@ -18,7 +18,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-6">
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid  gap-6">
           <div className="space-y-4">
             {recipe.ingredients?.length > 0 && (
               <div>
@@ -38,7 +38,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           {recipe.steps?.length > 0 && (
             <div>
               <h3 className="text-xl font-semibold border-b border-border pb-2">
-                Instructions
+                Steps
               </h3>
               <ol className="list-inside space-y-2">
                 {recipe.steps.map((step) => (
